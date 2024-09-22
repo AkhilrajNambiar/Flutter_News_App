@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:news_feed_app/presentation/pages/home_screen.dart';
 import 'package:news_feed_app/presentation/pages/login_screen.dart';
+import 'package:news_feed_app/presentation/pages/registration_screen.dart';
 import 'package:news_feed_app/presentation/pages/splash_screen.dart';
 
 class AppRouter {
@@ -24,13 +26,30 @@ class AppRouter {
         child: LoginScreen(),
       ),
     ),
+    GoRoute(
+      name: NewsPages.register.name,
+      path: NewsPages.register.path,
+      pageBuilder: (context, state) => MaterialPage(
+        key: state.pageKey,
+        child: RegistrationScreen(),
+      ),
+    ),
+    GoRoute(
+      name: NewsPages.home.name,
+      path: NewsPages.home.path,
+      pageBuilder: (context, state) => MaterialPage(
+        key: state.pageKey,
+        child: const HomeScreen(),
+      ),
+    ),
   ]);
 }
 
 enum NewsPages {
   splash('splash', '/splash'),
   login('login', '/login'),
-  register('register', '/register');
+  register('register', '/register'),
+  home('home', '/home');
 
   const NewsPages(this.name, this.path);
 

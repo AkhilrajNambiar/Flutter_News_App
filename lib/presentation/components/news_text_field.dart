@@ -78,7 +78,7 @@ class _NewsTextFieldState extends State<NewsTextField> {
               widget._label,
               style: NewsTextStyles.primaryText400.copyWith(
                 fontSize: widget._fontSize,
-                color: Color(0xff8A9099),
+                color: const Color(0xff8A9099),
               ),
             ),
           ),

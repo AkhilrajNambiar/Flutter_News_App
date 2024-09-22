@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:news_feed_app/controller/auth/login_controller.dart';
+import 'package:news_feed_app/controller/auth/registration_controller.dart';
 import 'package:news_feed_app/presentation/components/news_submit_button.dart';
 import 'package:news_feed_app/presentation/components/news_text_field.dart';
 import 'package:news_feed_app/presentation/router/app_router.dart';
@@ -10,10 +10,10 @@ import 'package:news_feed_app/utilities/constants/my_text_styles.dart';
 import 'package:news_feed_app/utilities/constants/news_toasts.dart';
 import 'package:news_feed_app/utilities/extensions.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class RegistrationScreen extends StatelessWidget {
+  RegistrationScreen({super.key});
 
-  final LoginController loginController = Get.find();
+  final registrationController = Get.find<RegistrationController>();
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 20.sh(context),
+                    height: 10.sh(context),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(
                         width: 2.sw(context),
                         child: Text(
-                          'Welcome back! Please login to continue',
+                          'Hi there! Please create an account to get started',
                           style: NewsTextStyles.primaryText700.copyWith(
                             fontSize: 19.sh(context),
                           ),
@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                     width: 2.sw(context),
                     height: 19.036.sh(context),
                     onChanged: (text) {
-                      loginController.email.value = text;
+                      registrationController.email.value = text;
                     },
                   ),
                   SizedBox(
@@ -84,7 +84,7 @@ class LoginScreen extends StatelessWidget {
                     width: 2.sw(context),
                     height: 19.036.sh(context),
                     onChanged: (text) {
-                      loginController.password.value = text;
+                      registrationController.password.value = text;
                     },
                   ),
                   SizedBox(
@@ -92,12 +92,12 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Obx(
                     () => NewsSubmitButton(
-                      text: 'Login',
+                      text: 'Register',
                       fontSize: 40.sh(context),
                       width: 2.sw(context),
                       height: 19.036.sh(context),
                       context: context,
-                      prefixIcon: loginController.isLoading.value
+                      prefixIcon: registrationController.isLoading.value
                           ? SpinKitFadingCircle(
                               size: 53.sh(context),
                               color: Theme.of(context).colorScheme.surface,
@@ -105,12 +105,13 @@ class LoginScreen extends StatelessWidget {
                           : null,
                       onTap: () async {
                         try {
-                          await loginController.loginUser();
-                          newsSuccessToast('Login Success!', context);
+                          await registrationController.registerUser();
+                          newsSuccessToast(
+                              'Account Creation Successful!', context);
                           context.goNamed(NewsPages.home.name);
                         } catch (e) {
                           newsErrorToast(e.toString(), context);
-                          loginController.isLoading.value = false;
+                          registrationController.isLoading.value = false;
                         }
                       },
                     ),
@@ -124,15 +125,15 @@ class LoginScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Don't have an account? ",
+                          'Already have an account? ',
                           style: NewsTextStyles.primaryText500.copyWith(
                             fontSize: 61.54.sh(context),
                           ),
                         ),
                         InkWell(
-                          onTap: () => context.goNamed(NewsPages.register.name),
+                          onTap: () => context.goNamed(NewsPages.login.name),
                           child: Text(
-                            'Register',
+                            'Login',
                             style: NewsTextStyles.primaryText500.copyWith(
                               fontSize: 61.54.sh(context),
                               color: Theme.of(context).colorScheme.primary,

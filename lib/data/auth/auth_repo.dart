@@ -7,7 +7,7 @@ class AuthRepository {
 
   late final FirebaseAuth _auth;
 
-  void registerUser({
+  Future<void> registerUser({
     required String email,
     required String password,
   }) async {
@@ -21,9 +21,12 @@ class AuthRepository {
     required String email,
     required String password,
   }) async {
+    await _auth.setPersistence(Persistence.LOCAL);
     await _auth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
   }
+
+  User? getLoggedInUser() => _auth.currentUser;
 }
