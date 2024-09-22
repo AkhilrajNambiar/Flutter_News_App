@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "Chrome Development Debug",
+            "type": "dart",
+            "request": "launch",
+            "flutterMode": "debug",
+            "program": "lib/main.dart",
+            "args": ["-d", "chrome", "--web-port", "8000"]
+        }
+    ]
+}

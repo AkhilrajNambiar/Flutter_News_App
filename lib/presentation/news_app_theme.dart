@@ -14,12 +14,12 @@ class NewsAppTheme {
   );
 
   static final darkTheme = ThemeData.dark().copyWith(
-    primaryColor: Colors.blue[100],
+    primaryColor: Colors.blue[300],
     scaffoldBackgroundColor: Colors.black,
     colorScheme: ColorScheme.dark(
-      primary: Colors.blue[100]!,
-      secondary: Colors.pink[100]!,
-      error: Colors.red[100]!,
+      primary: Colors.blue[300]!,
+      secondary: Colors.pink[200]!,
+      error: Colors.red[300]!,
       surface: Colors.black,
       onPrimary: Colors.white,
     ),

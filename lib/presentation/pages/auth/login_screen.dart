@@ -95,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                       text: 'Login',
                       fontSize: 40.sh(context),
                       width: 2.sw(context),
-                      height: 19.036.sh(context),
+                      height: 17.036.sh(context),
                       context: context,
                       prefixIcon: loginController.isLoading.value
                           ? SpinKitFadingCircle(

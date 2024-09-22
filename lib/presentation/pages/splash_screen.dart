@@ -15,18 +15,18 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final currenUserController = Get.find<CurrentUserController>();
+  final currenUserController = Get.find<IsLoggedInController>();
 
   @override
   void initState() {
     super.initState();
-    currenUserController.getCurrentUser();
+    currenUserController.isUserLoggedIn();
     Timer(const Duration(seconds: 1), () {
       if (mounted) {
-        if (currenUserController.user.value == null) {
-          context.goNamed(NewsPages.login.name);
-        } else {
+        if (currenUserController.loggedIn.value) {
           context.goNamed(NewsPages.home.name);
+        } else {
+          context.goNamed(NewsPages.login.name);
         }
       }
     });
