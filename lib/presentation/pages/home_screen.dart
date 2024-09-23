@@ -1,7 +1,9 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:news_feed_app/controller/notification/notification_controller.dart';
 import 'package:news_feed_app/controller/posts/post_detail_controller.dart';
 import 'package:news_feed_app/controller/posts/post_updation_controller.dart';
 import 'package:news_feed_app/controller/posts/posts_controller.dart';
@@ -12,12 +14,36 @@ import 'package:news_feed_app/utilities/constants/news_toasts.dart';
 import 'package:news_feed_app/utilities/extensions.dart';
 import 'package:news_feed_app/utilities/helper_functions.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final postscontroller = Get.find<PostsController>();
   final postDetailController = Get.find<PostDetailController>();
   final postUpdationController = Get.find<PostUpdationController>();
+  final notificationController = Get.find<NotificationController>();
+
+  @override
+  void initState() {
+    super.initState();
+    notificationController.getToken();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        // Show an alert dialog or notification within the app
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            title: Text(message.notification?.title ?? 'Title'),
+            content: Text(message.notification?.body ?? 'Body'),
+          ),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(

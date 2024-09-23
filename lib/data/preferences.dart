@@ -9,6 +9,7 @@ class PreferenceManager {
   final _uid = 'uid';
   final _username = 'username';
   final _isDarkMode = 'isDarkMode';
+  final _fcmToken = 'fcmToken';
 
   String getUid() => (_hiveBox.get(_uid) as String?) ?? '';
 
@@ -20,6 +21,12 @@ class PreferenceManager {
 
   Future<void> setUsername(String username) async {
     await _hiveBox.put(_username, username);
+  }
+
+  String getFcmToken() => (_hiveBox.get(_fcmToken) as String?) ?? '';
+
+  Future<void> setFcmToken(String fcmToken) async {
+    await _hiveBox.put(_fcmToken, fcmToken);
   }
 
   bool isDarkMode() => (_hiveBox.get(_isDarkMode) as bool?) ?? false;
