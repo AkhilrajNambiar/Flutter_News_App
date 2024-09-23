@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:news_feed_app/controller/auth/login_controller.dart';
+import 'package:news_feed_app/presentation/components/news_app_bar.dart';
 import 'package:news_feed_app/presentation/components/news_submit_button.dart';
 import 'package:news_feed_app/presentation/components/news_text_field.dart';
 import 'package:news_feed_app/presentation/router/app_router.dart';
@@ -15,8 +16,31 @@ class LoginScreen extends StatelessWidget {
 
   final LoginController loginController = Get.find();
 
+  List<Widget> _registerWidgets(BuildContext context) => [
+        Text(
+          "Don't have an account? ",
+          style: NewsTextStyles.primaryText500.copyWith(
+            fontSize: 61.54.sh(context),
+          ),
+        ),
+        InkWell(
+          onTap: () => context.goNamed(NewsPages.register.name),
+          child: Text(
+            'Register',
+            style: NewsTextStyles.primaryText500.copyWith(
+              fontSize: 61.54.sh(context),
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+        )
+      ];
+
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: NewsAppBar(
+          customTitle: 'Login',
+          showLogout: false,
+        ),
         body: Column(
           children: [
             Expanded(
@@ -33,7 +57,11 @@ class LoginScreen extends StatelessWidget {
                         child: Text(
                           'Welcome back! Please login to continue',
                           style: NewsTextStyles.primaryText700.copyWith(
-                            fontSize: 19.sh(context),
+                            fontSize: 1.sw(context) > 800
+                                ? 19.sh(context)
+                                : 1.sw(context) > 400
+                                    ? 30.sh(context)
+                                    : 40.sh(context),
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -41,7 +69,7 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 10.sh(context),
+                    height: 20.sh(context),
                   ),
                   SizedBox(
                     width: 2.sw(context),
@@ -120,27 +148,16 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(
                     width: 2.sw(context),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an account? ",
-                          style: NewsTextStyles.primaryText500.copyWith(
-                            fontSize: 61.54.sh(context),
+                    child: 1.sw(context) > 450
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [..._registerWidgets(context)],
+                          )
+                        : Column(
+                            children: [
+                              ..._registerWidgets(context),
+                            ],
                           ),
-                        ),
-                        InkWell(
-                          onTap: () => context.goNamed(NewsPages.register.name),
-                          child: Text(
-                            'Register',
-                            style: NewsTextStyles.primaryText500.copyWith(
-                              fontSize: 61.54.sh(context),
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
                   )
                 ],
               ),

@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:news_feed_app/controller/auth/registration_controller.dart';
+import 'package:news_feed_app/presentation/components/news_app_bar.dart';
 import 'package:news_feed_app/presentation/components/news_submit_button.dart';
 import 'package:news_feed_app/presentation/components/news_text_field.dart';
 import 'package:news_feed_app/presentation/router/app_router.dart';
@@ -17,13 +18,17 @@ class RegistrationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: NewsAppBar(
+          customTitle: 'Register',
+          showLogout: false,
+        ),
         body: Column(
           children: [
             Expanded(
               child: Column(
                 children: [
                   SizedBox(
-                    height: 10.sh(context),
+                    height: 20.sh(context),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -33,7 +38,11 @@ class RegistrationScreen extends StatelessWidget {
                         child: Text(
                           'Hi there! Please create an account to get started',
                           style: NewsTextStyles.primaryText700.copyWith(
-                            fontSize: 19.sh(context),
+                            fontSize: 1.sw(context) > 800
+                                ? 19.sh(context)
+                                : 1.sw(context) > 400
+                                    ? 30.sh(context)
+                                    : 40.sh(context),
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -41,7 +50,7 @@ class RegistrationScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 10.sh(context),
+                    height: 20.sh(context),
                   ),
                   SizedBox(
                     width: 2.sw(context),

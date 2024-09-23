@@ -8,9 +8,14 @@ import 'package:news_feed_app/utilities/constants/my_text_styles.dart';
 import 'package:news_feed_app/utilities/extensions.dart';
 
 class NewsAppBar extends StatelessWidget implements PreferredSizeWidget {
-  NewsAppBar({super.key, required this.customTitle});
+  NewsAppBar({
+    super.key,
+    required this.customTitle,
+    this.showLogout = true,
+  });
 
   late final String customTitle;
+  late final bool showLogout;
 
   final themeController = Get.find<ThemeController>();
   final logoutController = Get.find<LogoutController>();
@@ -39,25 +44,28 @@ class NewsAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(
-              right: 80.sw(context),
-            ),
-            child: NewsSubmitButton(
-              text: 'Logout',
-              fontSize: 50.sh(context),
-              width: 80,
-              height: 19.sh(context),
-              onTap: () async {
-                await logoutController.logout();
-                var count = window.history.length;
-                var countBackLength = 1;
-                while (count != countBackLength) {
-                  window.history.back();
-                  count--;
-                }
-              },
-              context: context,
+          Visibility(
+            visible: showLogout,
+            child: Padding(
+              padding: EdgeInsets.only(
+                right: 80.sw(context),
+              ),
+              child: NewsSubmitButton(
+                text: 'Logout',
+                fontSize: 50.sh(context),
+                width: 80,
+                height: 19.sh(context),
+                onTap: () async {
+                  await logoutController.logout();
+                  var count = window.history.length;
+                  var countBackLength = 1;
+                  while (count != countBackLength) {
+                    window.history.back();
+                    count--;
+                  }
+                },
+                context: context,
+              ),
             ),
           )
         ],
