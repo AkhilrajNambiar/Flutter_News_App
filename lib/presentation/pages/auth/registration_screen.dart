@@ -16,6 +16,15 @@ class RegistrationScreen extends StatelessWidget {
 
   final registrationController = Get.find<RegistrationController>();
 
+  String? passwordValidation() => registrationController.password.isEmpty
+      ? 'Password cannot be empty'
+      : registrationController.password.value.length < 5
+          ? 'Password should be atleast 5 chars'
+          : null;
+
+  String? emailValidation() =>
+      registrationController.email.isEmpty ? 'Email cannot be empty' : null;
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: NewsAppBar(
@@ -113,14 +122,23 @@ class RegistrationScreen extends StatelessWidget {
                             )
                           : null,
                       onTap: () async {
-                        try {
-                          await registrationController.registerUser();
-                          newsSuccessToast(
-                              'Account Creation Successful!', context);
-                          context.goNamed(NewsPages.home.name);
-                        } catch (e) {
-                          newsErrorToast(e.toString(), context);
-                          registrationController.isLoading.value = false;
+                        if (emailValidation() == null &&
+                            passwordValidation() == null) {
+                          try {
+                            await registrationController.registerUser();
+                            newsSuccessToast(
+                                'Account Creation Successful!', context);
+                            context.goNamed(NewsPages.home.name);
+                          } catch (e) {
+                            newsErrorToast(e.toString(), context);
+                            registrationController.isLoading.value = false;
+                          }
+                        } else {
+                          if (emailValidation() != null) {
+                            newsErrorToast(emailValidation()!, context);
+                          } else if (passwordValidation() != null) {
+                            newsErrorToast(passwordValidation()!, context);
+                          }
                         }
                       },
                     ),

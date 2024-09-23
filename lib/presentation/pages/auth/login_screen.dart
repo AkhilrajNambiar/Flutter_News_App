@@ -16,6 +16,12 @@ class LoginScreen extends StatelessWidget {
 
   final LoginController loginController = Get.find();
 
+  String? passwordValidation() =>
+      loginController.password.isEmpty ? 'Password cannot be empty' : null;
+
+  String? emailValidation() =>
+      loginController.email.isEmpty ? 'Email cannot be empty' : null;
+
   List<Widget> _registerWidgets(BuildContext context) => [
         Text(
           "Don't have an account? ",
@@ -132,13 +138,22 @@ class LoginScreen extends StatelessWidget {
                             )
                           : null,
                       onTap: () async {
-                        try {
-                          await loginController.loginUser();
-                          newsSuccessToast('Login Success!', context);
-                          context.goNamed(NewsPages.home.name);
-                        } catch (e) {
-                          newsErrorToast(e.toString(), context);
-                          loginController.isLoading.value = false;
+                        if (emailValidation() == null &&
+                            passwordValidation() == null) {
+                          try {
+                            await loginController.loginUser();
+                            newsSuccessToast('Login Success!', context);
+                            context.goNamed(NewsPages.home.name);
+                          } catch (e) {
+                            newsErrorToast(e.toString(), context);
+                            loginController.isLoading.value = false;
+                          }
+                        } else {
+                          if (emailValidation() != null) {
+                            newsErrorToast(emailValidation()!, context);
+                          } else if (passwordValidation() != null) {
+                            newsErrorToast(passwordValidation()!, context);
+                          }
                         }
                       },
                     ),

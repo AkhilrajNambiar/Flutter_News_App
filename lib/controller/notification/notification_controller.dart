@@ -12,6 +12,5 @@ class NotificationController extends GetxController {
 
   Future<void> getToken() async {
     fcmToken.value = await _fcmRepository.getToken();
-    print('Fcm token is ${fcmToken.value}');
   }
 }
